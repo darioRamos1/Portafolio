@@ -1,15 +1,19 @@
 ---
 import { perfil } from '../data/perfil';
+
+const secciones = [
+  { href: '#trabajo', texto: 'Trabajo' },
+  { href: '#experiencia', texto: 'Experiencia' },
+  { href: '#habilidades', texto: 'Habilidades' },
+  { href: '#contacto', texto: 'Contacto' },
+];
 ---
 
 <header class="top">
   <div class="wrap bar">
     <a class="logo" href="#inicio">{perfil.nombreCorto}</a>
     <nav class="menu" aria-label="Principal">
-      <a href="#trabajo">Trabajo</a>
-      <a href="#experiencia">Experiencia</a>
-      <a href="#habilidades">Habilidades</a>
-      <a href="#contacto">Contacto</a>
+      {secciones.map(({ href, texto }) => <a href={href}>{texto}</a>)}
     </nav>
     <div class="right">
       <button class="theme" type="button" id="tema" aria-label="Cambiar entre tema claro y oscuro">
@@ -17,6 +21,14 @@ import { perfil } from '../data/perfil';
         <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"></path></svg>
       </button>
       <a class="btn small" href="#contacto">Contactar</a>
+      <details class="mobile-menu">
+        <summary aria-label="Menú">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h14"></path></svg>
+        </summary>
+        <nav class="mobile-links" aria-label="Principal">
+          {secciones.map(({ href, texto }) => <a href={href}>{texto}</a>)}
+        </nav>
+      </details>
     </div>
   </div>
 </header>
@@ -33,6 +45,23 @@ import { perfil } from '../data/perfil';
       // Sin almacenamiento el tema dura lo que dure la visita.
     }
   });
+
+  const menuMovil = document.querySelector<HTMLDetailsElement>('.mobile-menu');
+  if (menuMovil) {
+    menuMovil.addEventListener('keydown', (evento) => {
+      if (evento.key === 'Escape' && menuMovil.open) {
+        menuMovil.open = false;
+        menuMovil.querySelector('summary')?.focus();
+      }
+    });
+
+    document.addEventListener('click', (evento) => {
+      const destino = evento.target;
+      if (menuMovil.open && destino instanceof Element && (!menuMovil.contains(destino) || destino.closest('a'))) {
+        menuMovil.open = false;
+      }
+    });
+  }
 </script>
 
 <style>
@@ -76,7 +105,8 @@ import { perfil } from '../data/perfil';
     gap: 8px;
     align-items: center;
   }
-  .theme {
+  .theme,
+  .mobile-menu summary {
     width: 34px;
     height: 34px;
     display: grid;
@@ -100,9 +130,77 @@ import { perfil } from '../data/perfil';
   :global([data-theme='dark']) .moon {
     display: block;
   }
-  @media (max-width: 620px) {
+  .mobile-menu {
+    display: none;
+    position: relative;
+  }
+  .mobile-menu summary {
+    list-style: none;
+  }
+  .mobile-menu summary::-webkit-details-marker {
+    display: none;
+  }
+  .mobile-menu summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .mobile-menu summary svg {
+    width: 20px;
+    height: 20px;
+  }
+  .mobile-menu[open] summary {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .mobile-links {
+    position: absolute;
+    inset-block-start: calc(100% + 8px);
+    inset-inline-end: 0;
+    min-width: 200px;
+    padding: 6px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+  .mobile-links a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: 12px;
+    border-radius: 8px;
+    font-size: 15px;
+    text-decoration: none;
+  }
+  .mobile-links a:hover,
+  .mobile-links a:focus-visible {
+    background: var(--raised);
+  }
+  @media (max-width: 680px) {
     .menu {
       display: none;
+    }
+    .mobile-menu {
+      display: block;
+    }
+    .bar {
+      gap: 6px;
+    }
+    .logo {
+      font-size: 15px;
+    }
+    .right {
+      flex-shrink: 0;
+      gap: 4px;
+    }
+    .theme,
+    .mobile-menu summary {
+      width: 40px;
+      height: 44px;
+    }
+    .right .btn {
+      height: 44px;
+      padding-inline: 8px;
     }
   }
 </style>

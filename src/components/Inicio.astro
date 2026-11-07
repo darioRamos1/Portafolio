@@ -1,14 +1,20 @@
 ---
 import { Image } from 'astro:assets';
 import foto from '../assets/foto.png';
+import druse from '../assets/proyectos/druse-consulta.jpg';
 import { perfil } from '../data/perfil';
 ---
 
 <div class="hero wrap" id="inicio">
-  <Image class="avatar enter" style="--delay:0s" src={foto} alt={`Foto de ${perfil.nombre}`} width={224} loading="eager" />
-  <div>
-    {perfil.disponible && <span class="status enter" style="--delay:.05s"><i></i>Disponible para nuevos proyectos</span>}
-    <h1 class="enter" style="--delay:.12s">{perfil.rol}.<br /><em>{perfil.stack}.</em></h1>
+  <div class="hero-copy">
+    <div class="identity enter">
+      <Image class="avatar" src={foto} alt="" width={128} loading="eager" />
+      <div>
+        <p class="name">{perfil.nombre}</p>
+        {perfil.disponible && <span class="status"><i aria-hidden="true"></i>Disponible para nuevos proyectos</span>}
+      </div>
+    </div>
+    <h1 class="enter" style="--delay:.12s">{perfil.rol}<em>{perfil.stack}</em></h1>
     <p class="lead enter" style="--delay:.22s">{perfil.presentacion}</p>
     <div class="actions enter" style="--delay:.32s">
       <a class="btn primary" href="#trabajo">Ver mi trabajo</a>
@@ -21,23 +27,48 @@ import { perfil } from '../data/perfil';
       {perfil.cifras.map((c) => <span>{c.valor && <b>{c.valor}</b>} {c.texto}</span>)}
     </div>
   </div>
+
+  <a class="featured enter" style="--delay:.22s" href="#druse">
+    <div class="featured-art">
+      <span class="featured-label">Proyecto destacado</span>
+      <Image
+        src={druse}
+        alt=""
+        widths={[360, 540, 720, 900]}
+        sizes="(max-width: 540px) calc(100vw - 72px), (max-width: 860px) 480px, 425px"
+        loading="eager"
+      />
+    </div>
+    <div class="featured-caption">
+      <div>
+        <p class="featured-title">Druse</p>
+        <p class="featured-description">Cliente SQL de código abierto para Windows</p>
+      </div>
+      <svg class="featured-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M4 10h11m-4-4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </div>
+  </a>
 </div>
 
 <style>
   .hero {
-    padding-block: 88px 72px;
+    padding-block: 76px 56px;
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 28px 40px;
-    align-items: start;
+    grid-template-columns: minmax(0, 1.22fr) minmax(0, 1fr);
+    gap: 36px;
+    align-items: center;
   }
-  .hero > * {
-    min-width: 0;
+  .identity {
+    display: flex;
+    align-items: center;
+    gap: 14px;
   }
   .avatar {
-    width: 112px;
-    height: 112px;
-    border-radius: 24px;
+    width: 60px;
+    height: 60px;
+    flex: none;
+    border-radius: 16px;
     object-fit: cover;
     object-position: 50% 25%;
     border: 1px solid var(--line);
@@ -49,14 +80,15 @@ import { perfil } from '../data/perfil';
     gap: 8px;
     font-size: 13px;
     color: var(--muted);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 5px 12px 5px 10px;
-    background: var(--surface);
+  }
+  .name {
+    font-size: 16px;
+    font-weight: 600;
   }
   .status i {
     width: 7px;
     height: 7px;
+    flex: none;
     border-radius: 50%;
     background: var(--ok);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 20%, transparent);
@@ -76,51 +108,124 @@ import { perfil } from '../data/perfil';
     }
   }
   h1 {
-    font-size: clamp(38px, 6.2vw, 68px);
-    line-height: 1.02;
-    margin-top: 18px;
+    font-size: clamp(34px, 4.4vw, 54px);
+    line-height: 1.07;
+    margin-top: 24px;
     letter-spacing: -0.04em;
   }
   h1 em {
+    display: block;
     font-style: normal;
     color: var(--muted);
+    margin-top: 4px;
   }
   .lead {
-    font-size: clamp(17px, 2vw, 20px);
+    font-size: clamp(16px, 1.6vw, 18px);
     color: var(--muted);
     max-width: 56ch;
-    margin-top: 22px;
+    margin-top: 18px;
     line-height: 1.55;
   }
   .actions {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-    margin-top: 32px;
+    margin-top: 24px;
   }
   .meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px 28px;
-    margin-top: 40px;
-    padding-top: 24px;
-    border-top: 1px solid var(--line);
-    font-size: 14px;
+    gap: 6px 18px;
+    margin-top: 22px;
+    font-size: 13px;
     color: var(--muted);
   }
   .meta b {
     color: var(--ink);
     font-weight: 500;
   }
-  @media (max-width: 620px) {
+
+  .featured {
+    display: block;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    text-decoration: none;
+  }
+  .featured:hover,
+  .featured:focus-visible {
+    border-color: var(--accent);
+  }
+  .featured-art {
+    padding: 18px clamp(14px, 2vw, 24px) 0;
+    background:
+      radial-gradient(ellipse at 90% 100%, color-mix(in srgb, var(--accent) 21%, transparent), transparent 73%),
+      color-mix(in srgb, var(--accent) 7%, var(--raised));
+  }
+  .featured-label {
+    display: block;
+    margin-bottom: 14px;
+    font: 500 12px var(--mono);
+    color: var(--accent);
+  }
+  .featured-art img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid color-mix(in srgb, var(--ink) 19%, transparent);
+    border-bottom: 0;
+    border-radius: 8px 8px 0 0;
+    background: #1d1d22;
+  }
+  .featured-caption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px clamp(14px, 2vw, 24px);
+    border-top: 1px solid var(--line);
+  }
+  .featured-title {
+    font-size: 19px;
+    font-weight: 600;
+  }
+  .featured-description {
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+  .featured-arrow {
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+    flex: none;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    color: var(--accent);
+  }
+
+  @media (max-width: 860px) {
     .hero {
       grid-template-columns: 1fr;
-      padding-block: 48px;
+      padding-block: 48px 36px;
+    }
+    .featured {
+      width: min(100%, 528px);
+    }
+  }
+  @media (max-width: 620px) {
+    .hero {
+      gap: 24px;
+      padding-block: 32px 24px;
     }
     .avatar {
-      width: 88px;
-      height: 88px;
-      border-radius: 20px;
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+    }
+    .meta {
+      margin-top: 18px;
     }
   }
 </style>
