@@ -1,0 +1,385 @@
+---
+import { Image } from 'astro:assets';
+import editorOscuro from '../assets/proyectos/druse-editor-oscuro.png';
+import editorClaro from '../assets/proyectos/druse-editor-claro.png';
+import diagrama from '../assets/proyectos/druse-diagrama.png';
+import conexion from '../assets/proyectos/druse-conexion.png';
+import inicio from '../assets/proyectos/finanzas-inicio.png';
+import registrar from '../assets/proyectos/finanzas-registrar.png';
+import historial from '../assets/proyectos/finanzas-historial.png';
+import reportes from '../assets/proyectos/finanzas-reportes.png';
+import cuentas from '../assets/proyectos/finanzas-cuentas.png';
+import suscripciones from '../assets/proyectos/finanzas-suscripciones.png';
+
+// Las capturas de Druse usan una base de ejemplo con datos ficticios.
+const druse = [
+  { src: editorOscuro, nombre: 'Editor SQL', alt: 'Editor de Druse con una consulta de ventas por ciudad y sus resultados en la cuadrícula, en tema oscuro' },
+  { src: diagrama, nombre: 'Diagrama entidad-relación', alt: 'Diagrama entidad-relación de cinco tablas con sus claves primarias y foráneas' },
+  { src: conexion, nombre: 'Nueva conexión', alt: 'Formulario de nueva conexión con los seis motores de bases de datos disponibles' },
+  { src: editorClaro, nombre: 'Tema claro', alt: 'El mismo editor de Druse en tema claro' },
+];
+
+const finanzas = [
+  { src: inicio, alt: 'Inicio con el dinero disponible y los pagos próximos' },
+  { src: registrar, alt: 'Pantalla para registrar un gasto o un ingreso' },
+  { src: historial, alt: 'Historial de movimientos' },
+  { src: reportes, alt: 'Reportes de gastos por categoría' },
+  { src: cuentas, alt: 'Saldos de las cuentas' },
+  { src: suscripciones, alt: 'Suscripciones y pagos recurrentes' },
+];
+---
+
+<section id="trabajo" class="wrap">
+  <div class="sec-title">
+    <div><span class="eyebrow">Trabajo seleccionado</span><h2>Productos que he construido</h2></div>
+    <p>Diseñados, programados, probados y publicados por mí.</p>
+  </div>
+
+  <div class="work">
+    <article class="case" id="druse">
+      <div class="case-body">
+        <div>
+          <h3>Druse</h3>
+          <p class="kind">Cliente de bases de datos para Windows · Código abierto</p>
+          <div class="tags"><span class="tag">C# · .NET 10</span><span class="tag">Angular</span><span class="tag">Tauri</span><span class="tag">Playwright</span><span class="tag">GitHub Actions</span></div>
+          <div class="links"><a href="https://darioramos1.github.io/druse/">Sitio y descargas ↗</a><a href="https://github.com/darioRamos1/druse">Código ↗</a></div>
+        </div>
+        <div>
+          <p>Una aplicación de escritorio para conectarse a varios motores, explorar el esquema, escribir SQL con autocompletado, dibujar diagramas y editar, importar o exportar datos.</p>
+          <p>Se instala sin .NET ni Node.js. Cada versión se compila, prueba y publica automáticamente en tres ediciones, con actualizaciones firmadas.</p>
+          <div class="stats">
+            <div><b>6</b><span>motores de BD</span></div>
+            <div><b>v1.11</b><span>versión actual</span></div>
+            <div><b>6</b><span>paquetes por versión</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="media media--desktop">
+        <div class="gallery" data-gallery>
+          <div class="tabs" role="tablist" aria-label="Capturas de Druse">
+            {druse.map((c, i) => (
+              <button type="button" role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-index={i}>{c.nombre}</button>
+            ))}
+          </div>
+          <div class="window">
+            <div class="chrome" aria-hidden="true"><i></i><i></i><i></i></div>
+            {druse.map((c, i) => (
+              <Image src={c.src} alt={c.alt} widths={[720, 1080, 1440, 2160]} sizes="(max-width: 1120px) 100vw, 980px" loading="eager" hidden={i !== 0} data-slide={i} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="case" id="finanzas">
+      <div class="case-body">
+        <div>
+          <h3>Druse Finanzas</h3>
+          <p class="kind">App Android de finanzas personales · Sin conexión</p>
+          <div class="tags"><span class="tag">Angular</span><span class="tag">Ionic</span><span class="tag">Capacitor</span><span class="tag">SQLite</span><span class="tag">Playwright</span></div>
+          <div class="links"><a href="https://darioramos1.github.io/druse-finanzas-legal/privacidad.html">Política de privacidad ↗</a></div>
+        </div>
+        <div>
+          <p>Cuentas, gastos, pagos próximos, suscripciones y reportes, guardados en el teléfono y sin depender de internet. Pensada para el español de Colombia y los pesos colombianos.</p>
+          <div class="stats">
+            <div><b>806</b><span>pruebas unitarias</span></div>
+            <div><b>83</b><span>pruebas de punta a punta</span></div>
+            <div><b>v1.0</b><span>Android 7 o superior</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="media media--phones">
+        <div class="phones">
+          {finanzas.map((c) => (
+            <div class="phone"><Image src={c.src} alt={c.alt} widths={[240, 360, 480]} sizes="240px" loading="lazy" /></div>
+          ))}
+        </div>
+      </div>
+    </article>
+
+    <article class="case case--split" id="r3safety">
+      <div class="case-body">
+        <div>
+          <h3>R3Safety</h3>
+          <p class="kind">SaaS para seguridad y salud en el trabajo</p>
+          <div class="tags"><span class="tag">.NET 10 · CQRS</span><span class="tag">Dapper</span><span class="tag">Vue 3</span><span class="tag">PostgreSQL</span><span class="tag">MinIO</span><span class="tag">Docker</span></div>
+          <p class="private">Repositorio privado. Puedo mostrarlo en una entrevista.</p>
+        </div>
+        <div>
+          <p>Ayuda a las empresas colombianas a cumplir el Decreto 1072 y la Resolución 0312: autoevaluación anual, checklist, evidencias, plan de mejora y auditoría.</p>
+          <p>Cada empresa tiene su propia base de datos. La sesión usa un token corto en memoria y un refresh token que rota y detecta reutilización.</p>
+        </div>
+      </div>
+      <div class="media media--diagram">
+        <div class="arch" role="img" aria-label="La aplicación Vue llama a la API .NET, que usa una base principal, una base por empresa y MinIO para las evidencias">
+          <svg viewBox="0 0 440 220">
+            <rect class="box" x="150" y="8" width="140" height="44" rx="10"></rect>
+            <text x="220" y="28" text-anchor="middle">Vue 3</text><text class="sub" x="220" y="43" text-anchor="middle">SPA</text>
+            <path class="ln" d="M220 52v26"></path>
+            <rect class="hl" x="130" y="78" width="180" height="48" rx="10"></rect>
+            <text x="220" y="99" text-anchor="middle">API .NET 10</text><text class="sub" x="220" y="114" text-anchor="middle">JWT · MediatR · Dapper</text>
+            <path class="ln" d="M170 126 L70 160 M220 126v34 M270 126 L370 160"></path>
+            <rect class="box" x="10" y="160" width="120" height="48" rx="10"></rect>
+            <text x="70" y="181" text-anchor="middle">Base principal</text><text class="sub" x="70" y="196" text-anchor="middle">usuarios</text>
+            <rect class="box" x="160" y="160" width="120" height="48" rx="10"></rect>
+            <text x="220" y="181" text-anchor="middle">Base por empresa</text><text class="sub" x="220" y="196" text-anchor="middle">PostgreSQL</text>
+            <rect class="box" x="310" y="160" width="120" height="48" rx="10"></rect>
+            <text x="370" y="181" text-anchor="middle">Evidencias</text><text class="sub" x="370" y="196" text-anchor="middle">MinIO · S3</text>
+          </svg>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<script>
+  // Pestañas de la galería: cambian la captura sin recargar.
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((galeria) => {
+    const pestanas = galeria.querySelectorAll<HTMLButtonElement>('[role="tab"]');
+    const capturas = galeria.querySelectorAll<HTMLImageElement>('[data-slide]');
+    pestanas.forEach((pestana) => {
+      pestana.addEventListener('click', () => {
+        const indice = pestana.dataset.index;
+        pestanas.forEach((p) => p.setAttribute('aria-selected', String(p === pestana)));
+        capturas.forEach((c) => (c.hidden = c.dataset.slide !== indice));
+      });
+    });
+  });
+</script>
+
+<style>
+  .work {
+    display: grid;
+    gap: 24px;
+  }
+  .case {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .case-body {
+    padding: 36px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 48px;
+    align-items: start;
+  }
+  .case-body > * {
+    min-width: 0;
+  }
+  h3 {
+    font-size: 28px;
+    letter-spacing: -0.03em;
+  }
+  .kind {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .case p:not(.kind) {
+    color: var(--muted);
+  }
+  .case-body > div > p + p {
+    margin-top: 12px;
+  }
+  .links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+    font-size: 14.5px;
+    font-weight: 500;
+  }
+  .links a {
+    text-decoration: none;
+  }
+  .links a:hover {
+    color: var(--accent);
+  }
+  .private {
+    margin-top: 22px;
+    font-size: 14px;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+  .stats div {
+    padding-top: 16px;
+  }
+  .stats b {
+    display: block;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+  .stats span {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .media {
+    background: var(--raised);
+    border-top: 1px solid var(--line);
+    overflow: hidden;
+  }
+
+  /* Galería de escritorio */
+  .media--desktop {
+    padding: 28px 40px 0;
+  }
+  .gallery {
+    max-width: 980px;
+    margin: 0 auto;
+  }
+  .tabs {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  .tabs button {
+    font: 500 13.5px var(--sans);
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .tabs button[aria-selected='true'] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+  .window {
+    border-radius: 12px 12px 0 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-bottom: 0;
+    box-shadow: 0 -8px 40px -20px rgba(0, 0, 0, 0.35);
+    background: #1d1d22;
+  }
+  .chrome {
+    height: 30px;
+    display: flex;
+    gap: 7px;
+    align-items: center;
+    padding: 0 12px;
+  }
+  .chrome i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #3a3a42;
+  }
+  .window img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .window img[hidden] {
+    display: none;
+  }
+
+  /* Teléfonos */
+  .media--phones {
+    padding: 40px 0 0;
+  }
+  .phones {
+    display: flex;
+    gap: 20px;
+    padding-inline: 40px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    justify-content: safe center;
+  }
+  .phone {
+    flex: none;
+    width: 200px;
+    border-radius: 28px 28px 0 0;
+    border: 6px solid #1d1d22;
+    border-bottom: 0;
+    overflow: hidden;
+    background: #1d1d22;
+    scroll-snap-align: center;
+  }
+  .phone img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 9 / 15;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  /* Diagrama */
+  .media--diagram {
+    display: flex;
+    justify-content: center;
+    padding: 36px 40px;
+  }
+  .arch {
+    width: 100%;
+    max-width: 520px;
+  }
+  .arch svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .arch text {
+    font: 500 12px var(--sans);
+    fill: var(--ink);
+  }
+  .arch .sub {
+    font: 400 10.5px var(--mono);
+    fill: var(--muted);
+  }
+  .arch .box {
+    fill: var(--surface);
+    stroke: var(--line);
+  }
+  .arch .hl {
+    fill: var(--surface);
+    stroke: var(--accent);
+  }
+  .arch .ln {
+    stroke: var(--muted);
+    stroke-width: 1.2;
+    fill: none;
+  }
+
+  @media (max-width: 900px) {
+    .case-body {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 620px) {
+    .case-body {
+      padding: 24px;
+    }
+    .media--desktop {
+      padding: 20px 16px 0;
+    }
+    .phones {
+      padding-inline: 16px;
+    }
+    .phone {
+      width: 170px;
+    }
+    .media--diagram {
+      padding: 24px 16px;
+    }
+    .stats b {
+      font-size: 21px;
+    }
+  }
+</style>

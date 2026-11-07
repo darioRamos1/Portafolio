@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import Cabecera from '../components/Cabecera.astro';
+import Inicio from '../components/Inicio.astro';
+import Proyectos from '../components/Proyectos.astro';
+import Experiencia from '../components/Experiencia.astro';
+import Contacto from '../components/Contacto.astro';
+import { perfil } from '../data/perfil';
+---
+
+<Base
+  title={`${perfil.nombre} · ${perfil.rol}`}
+  description={`${perfil.rol} en ${perfil.ciudad}. ${perfil.stack}. Proyectos, experiencia y contacto.`}
+>
+  <Cabecera />
+  <main>
+    <Inicio />
+    <Proyectos />
+    <Experiencia />
+    <Contacto />
+  </main>
+</Base>
