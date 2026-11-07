@@ -34,10 +34,53 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         try { guardado = localStorage.getItem('tema'); } catch (e) {}
         var oscuro = guardado ? guardado === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
         document.documentElement.dataset.theme = oscuro ? 'dark' : 'light';
+        // Solo con JS se esconden los bloques que entran al hacer scroll; sin JS se ven siempre.
+        document.documentElement.classList.add('js');
       })();
     </script>
   </head>
   <body>
     <slot />
+    <script>
+      // Revela cada bloque al entrar en pantalla y anima las cifras una sola vez.
+      const reducir = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const bloques = document.querySelectorAll<HTMLElement>('.reveal');
+
+      const contar = (el: HTMLElement) => {
+        const final = Number(el.dataset.count);
+        if (!final || reducir) return;
+        const inicio = performance.now();
+        const paso = (t: number) => {
+          const k = Math.min((t - inicio) / 900, 1);
+          el.textContent = String(Math.round(final * (1 - Math.pow(1 - k, 3))));
+          if (k < 1) requestAnimationFrame(paso);
+        };
+        requestAnimationFrame(paso);
+      };
+
+      if (reducir || !('IntersectionObserver' in window)) {
+        bloques.forEach((b) => b.classList.add('is-in'));
+      } else {
+        const observador = new IntersectionObserver(
+          (entradas) => {
+            entradas.forEach((e) => {
+              if (!e.isIntersecting) return;
+              const el = e.target as HTMLElement;
+              el.classList.add('is-in');
+              el.querySelectorAll<HTMLElement>('[data-count]').forEach(contar);
+              observador.unobserve(el);
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+        );
+        bloques.forEach((b) => observador.observe(b));
+      }
+
+      // La barra superior gana una sombra suave al bajar.
+      const barra = document.querySelector('.top');
+      const marcar = () => barra?.classList.toggle('is-scrolled', scrollY > 8);
+      addEventListener('scroll', marcar, { passive: true });
+      marcar();
+    </script>
   </body>
 </html>

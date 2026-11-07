@@ -3,12 +3,12 @@ import { experiencia, formacion, habilidades } from '../data/perfil';
 ---
 
 <section id="experiencia" class="wrap">
-  <div class="sec-title">
+  <div class="sec-title reveal">
     <div><span class="eyebrow">Experiencia</span><h2>Dónde he trabajado</h2></div>
   </div>
   <div class="jobs">
-    {experiencia.map((e) => (
-      <div class="job">
+    {experiencia.map((e, i) => (
+      <div class="job reveal" style={`--delay:${i * 0.06}s`}>
         <div class="co">{e.empresa}{e.detalle && <small>{e.detalle}</small>}</div>
         <div>
           <h3>{e.cargo}</h3>
@@ -21,10 +21,10 @@ import { experiencia, formacion, habilidades } from '../data/perfil';
 </section>
 
 <section id="habilidades" class="wrap">
-  <div class="sec-title">
+  <div class="sec-title reveal">
     <div><span class="eyebrow">Habilidades</span><h2>Con qué trabajo</h2></div>
   </div>
-  <div class="skills">
+  <div class="skills reveal">
     {habilidades.map((h) => (
       <div>
         <h3>{h.grupo}</h3>
@@ -32,7 +32,7 @@ import { experiencia, formacion, habilidades } from '../data/perfil';
       </div>
     ))}
   </div>
-  <div class="edu">
+  <div class="edu reveal">
     {formacion.map((f) => (
       <div><b>{f.titulo}</b><span>{f.lugar}</span></div>
     ))}

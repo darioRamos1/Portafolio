@@ -5,19 +5,19 @@ import { perfil } from '../data/perfil';
 ---
 
 <div class="hero wrap" id="inicio">
-  <Image class="avatar" src={foto} alt={`Foto de ${perfil.nombre}`} width={224} loading="eager" />
+  <Image class="avatar enter" style="--delay:0s" src={foto} alt={`Foto de ${perfil.nombre}`} width={224} loading="eager" />
   <div>
-    {perfil.disponible && <span class="status"><i></i>Disponible para nuevos proyectos</span>}
-    <h1>{perfil.rol}.<br /><em>{perfil.stack}.</em></h1>
-    <p class="lead">{perfil.presentacion}</p>
-    <div class="actions">
+    {perfil.disponible && <span class="status enter" style="--delay:.05s"><i></i>Disponible para nuevos proyectos</span>}
+    <h1 class="enter" style="--delay:.12s">{perfil.rol}.<br /><em>{perfil.stack}.</em></h1>
+    <p class="lead enter" style="--delay:.22s">{perfil.presentacion}</p>
+    <div class="actions enter" style="--delay:.32s">
       <a class="btn primary" href="#trabajo">Ver mi trabajo</a>
       <a class="btn" href={perfil.cv} download>
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 2v8m0 0 3-3m-3 3L5 7M3 13h10"></path></svg>
         Descargar CV
       </a>
     </div>
-    <div class="meta">
+    <div class="meta enter" style="--delay:.42s">
       {perfil.cifras.map((c) => <span>{c.valor && <b>{c.valor}</b>} {c.texto}</span>)}
     </div>
   </div>
@@ -60,6 +60,20 @@ import { perfil } from '../data/perfil';
     border-radius: 50%;
     background: var(--ok);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 20%, transparent);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .status i {
+      animation: pulso 2.4s ease-out infinite;
+    }
+    @keyframes pulso {
+      0% {
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 45%, transparent);
+      }
+      70%,
+      100% {
+        box-shadow: 0 0 0 8px transparent;
+      }
+    }
   }
   h1 {
     font-size: clamp(38px, 6.2vw, 68px);

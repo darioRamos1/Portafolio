@@ -30,13 +30,13 @@ const finanzas = [
 ---
 
 <section id="trabajo" class="wrap">
-  <div class="sec-title">
+  <div class="sec-title reveal">
     <div><span class="eyebrow">Trabajo seleccionado</span><h2>Productos que he construido</h2></div>
     <p>Diseñados, programados, probados y publicados por mí.</p>
   </div>
 
   <div class="work">
-    <article class="case" id="druse">
+    <article class="case reveal" id="druse">
       <div class="case-body">
         <div>
           <h3>Druse</h3>
@@ -48,9 +48,9 @@ const finanzas = [
           <p>Una aplicación de escritorio para conectarse a varios motores, explorar el esquema, escribir SQL con autocompletado, dibujar diagramas y editar, importar o exportar datos.</p>
           <p>Se instala sin .NET ni Node.js. Cada versión se compila, prueba y publica automáticamente en tres ediciones, con actualizaciones firmadas.</p>
           <div class="stats">
-            <div><b>6</b><span>motores de BD</span></div>
+            <div><b data-count="6">6</b><span>motores de BD</span></div>
             <div><b>v1.11</b><span>versión actual</span></div>
-            <div><b>6</b><span>paquetes por versión</span></div>
+            <div><b data-count="6">6</b><span>paquetes por versión</span></div>
           </div>
         </div>
       </div>
@@ -63,15 +63,17 @@ const finanzas = [
           </div>
           <div class="window">
             <div class="chrome" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="shots">
             {druse.map((c, i) => (
-              <Image src={c.src} alt={c.alt} widths={[720, 1080, 1440, 2160]} sizes="(max-width: 1120px) 100vw, 980px" loading="eager" hidden={i !== 0} data-slide={i} />
+              <Image src={c.src} alt={c.alt} widths={[720, 1080, 1440, 2160]} sizes="(max-width: 1120px) 100vw, 980px" loading="eager" class={i === 0 ? "is-active" : ""} aria-hidden={i === 0 ? "false" : "true"} data-slide={i} />
             ))}
+            </div>
           </div>
         </div>
       </div>
     </article>
 
-    <article class="case" id="finanzas">
+    <article class="case reveal" id="finanzas">
       <div class="case-body">
         <div>
           <h3>Druse Finanzas</h3>
@@ -82,8 +84,8 @@ const finanzas = [
         <div>
           <p>Cuentas, gastos, pagos próximos, suscripciones y reportes, guardados en el teléfono y sin depender de internet. Pensada para el español de Colombia y los pesos colombianos.</p>
           <div class="stats">
-            <div><b>806</b><span>pruebas unitarias</span></div>
-            <div><b>83</b><span>pruebas de punta a punta</span></div>
+            <div><b data-count="806">806</b><span>pruebas unitarias</span></div>
+            <div><b data-count="83">83</b><span>pruebas de punta a punta</span></div>
             <div><b>v1.0</b><span>Android 7 o superior</span></div>
           </div>
         </div>
@@ -97,7 +99,7 @@ const finanzas = [
       </div>
     </article>
 
-    <article class="case case--split" id="r3safety">
+    <article class="case case--split reveal" id="r3safety">
       <div class="case-body">
         <div>
           <h3>R3Safety</h3>
@@ -141,7 +143,11 @@ const finanzas = [
       pestana.addEventListener('click', () => {
         const indice = pestana.dataset.index;
         pestanas.forEach((p) => p.setAttribute('aria-selected', String(p === pestana)));
-        capturas.forEach((c) => (c.hidden = c.dataset.slide !== indice));
+        capturas.forEach((c) => {
+          const activa = c.dataset.slide === indice;
+          c.classList.toggle('is-active', activa);
+          c.setAttribute('aria-hidden', String(!activa));
+        });
       });
     });
   });
@@ -279,13 +285,66 @@ const finanzas = [
     border-radius: 50%;
     background: #3a3a42;
   }
+  /* Las capturas se apilan en la misma celda y cambian con un fundido. */
+  .shots {
+    display: grid;
+  }
   .window img {
+    grid-area: 1 / 1;
     display: block;
     width: 100%;
     height: auto;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.01);
+    transition:
+      opacity 0.45s ease,
+      transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+      visibility 0s linear 0.45s;
   }
-  .window img[hidden] {
-    display: none;
+  .window img.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+  .tabs button {
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .case {
+      transition:
+        transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+        box-shadow 0.35s ease,
+        opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+    .phone {
+      transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+    .case:hover .phone {
+      transform: translateY(-8px);
+    }
+    .case:hover .phone:nth-child(2) { transition-delay: 0.04s; }
+    .case:hover .phone:nth-child(3) { transition-delay: 0.08s; }
+    .case:hover .phone:nth-child(4) { transition-delay: 0.12s; }
+    .case:hover .phone:nth-child(5) { transition-delay: 0.16s; }
+    .case:hover .phone:nth-child(6) { transition-delay: 0.2s; }
+    :global(.js) .reveal .arch .ln {
+      stroke-dasharray: 160;
+      stroke-dashoffset: 160;
+      transition: stroke-dashoffset 1.1s ease 0.4s;
+    }
+    :global(.js) .reveal.is-in .arch .ln {
+      stroke-dashoffset: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .window img {
+      transition: none;
+    }
   }
 
   /* Teléfonos */
