@@ -1,28 +1,24 @@
-// Todo el texto del portafolio vive aquí, para cambiarlo sin tocar el diseño.
+// Datos del perfil, la experiencia y la formación.
 
 export const perfil = {
-  nombre: 'Dario Ramos Cañas',
-  nombreCorto: 'Dario Ramos',
+  nombre: 'Darío Ramos Cañas',
+  nombreCorto: 'Darío Ramos',
   rol: 'Desarrollador full stack',
   stack: '.NET, Angular y Azure',
   ciudad: 'Valledupar, Colombia',
   disponible: true,
   presentacion:
-    'Soy Dario, ingeniero de sistemas en Valledupar, Colombia. Llevo más de cuatro años construyendo APIs, procesos en la nube e interfaces para plataformas de transporte, salud y finanzas. En mi tiempo libre creo productos completos, desde la base de datos hasta el instalador.',
+    'Más de cuatro años desarrollando APIs con .NET, interfaces con Angular y procesos en Azure para plataformas de transporte, salud y finanzas.',
   email: 'dandresramosdev@gmail.com',
   github: 'https://github.com/darioRamos1',
   linkedin: 'https://www.linkedin.com/in/dario-andres-ramos-ca%C3%B1as-060935223',
   cv: `${import.meta.env.BASE_URL}CV-Dario-Ramos-Canas.pdf`,
-  cifras: [
-    { valor: '4+', texto: 'años de experiencia' },
-    { valor: '3', texto: 'productos propios' },
-    { valor: '', texto: 'Esp. en Ingeniería de Software' },
-  ],
 };
 
 export const experiencia = [
   {
     empresa: 'DataTools',
+    logo: { url: 'https://www.datatools.com.co/imagenes/logo.png', fondo: '#fff' },
     detalle: 'Valledupar',
     cargo: 'Desarrollador de software',
     periodo: '2024 — 2026',
@@ -31,6 +27,10 @@ export const experiencia = [
   },
   {
     empresa: 'Artemisa Tech',
+    logo: {
+      url: 'https://media.licdn.com/dms/image/v2/C4E0BAQHg0nR4ZEp7fg/company-logo_200_200/company-logo_200_200/0/1630648022334?e=2147483647&t=ru6cWoXWlzP7zGXL7Za0ebNQSYdEyxvdF8bZQfv5aQM&v=beta',
+      fondo: '#fff',
+    },
     detalle: 'Outsourcing para DataTools',
     cargo: 'Analista de desarrollo semi-senior',
     periodo: '2023 — 2024',
@@ -39,6 +39,7 @@ export const experiencia = [
   },
   {
     empresa: 'GREMCA S.A.',
+    logo: { url: 'https://gremca.com.co/wp-content/uploads/2025/12/logo_footer.png', fondo: '#174537' },
     detalle: '',
     cargo: 'Especialista de sistemas',
     periodo: '2023',

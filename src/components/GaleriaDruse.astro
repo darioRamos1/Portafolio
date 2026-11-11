@@ -1,0 +1,216 @@
+---
+import { Image } from 'astro:assets';
+import consulta from '../assets/proyectos/druse-consulta.jpg';
+import constructor from '../assets/proyectos/druse-constructor.jpg';
+import relaciones from '../assets/proyectos/druse-relaciones.jpg';
+
+// Las capturas de Druse usan una base de ejemplo con datos ficticios.
+const druse = [
+  {
+    src: consulta,
+    nombre: 'Editor SQL',
+    alt: 'Editor SQL de Druse con tres tablas unidas y siete filas de ventas por ciudad',
+    detalle: 'Explora el esquema, escribe SQL y revisa el resultado de ventas por ciudad en la cuadrícula.',
+  },
+  {
+    src: constructor,
+    nombre: 'Constructor visual',
+    alt: 'Constructor de Druse con un filtro de pedidos pagados, agrupación por ciudad, SQL generado y resultados',
+    detalle: 'Combina tablas, filtros y cálculos. Druse genera el SQL y permite probarlo en el mismo panel.',
+  },
+  {
+    src: relaciones,
+    nombre: 'Diagrama de relaciones',
+    alt: 'Diagrama de la tienda de ejemplo con cinco tablas y cuatro relaciones por claves foráneas',
+    detalle: 'Sigue las claves foráneas entre clientes, pedidos, productos y las demás tablas de la tienda de ejemplo.',
+  },
+];
+
+---
+
+<div class="media media--desktop">
+  <div class="gallery" data-gallery>
+    <div class="tabs" role="tablist" aria-label="Capturas de Druse" hidden>
+      {druse.map((c, i) => (
+        <button
+          type="button"
+          role="tab"
+          id={`druse-tab-${i}`}
+          aria-controls={`druse-captura-${i}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? 0 : -1}
+        >{c.nombre}</button>
+      ))}
+    </div>
+    <div class="window">
+      {druse.map((c, i) => (
+        <div role="tabpanel" id={`druse-captura-${i}`} aria-labelledby={`druse-tab-${i}`} hidden={i !== 0}>
+          <a class="shot-link" href={c.src.src} target="_blank" rel="noopener" aria-describedby="druse-captura-aviso">
+            <span class="chrome">
+              <span class="chrome-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="shot-action">
+                Ampliar captura
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M10 2h4v4m0-4-4 4M6 14H2v-4m0 4 4-4" /></svg>
+              </span>
+            </span>
+            <Image
+              src={c.src}
+              alt={c.alt}
+              widths={[360, 720, 1080, 1280]}
+              sizes="(max-width: 620px) calc(100vw - 76px), (max-width: 1100px) calc(100vw - 124px), 980px"
+              loading="lazy"
+            />
+          </a>
+          <p class="shot-description">{c.detalle}</p>
+        </div>
+      ))}
+      <span class="sr-only" id="druse-captura-aviso">Se abre en una pestaña nueva.</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((galeria) => {
+    const lista = galeria.querySelector<HTMLElement>('[role="tablist"]');
+    if (!lista) return;
+
+    const pestanas = galeria.querySelectorAll<HTMLButtonElement>('[role="tab"]');
+    const capturas = galeria.querySelectorAll<HTMLElement>('[role="tabpanel"]');
+
+    const seleccionar = (indice: number) => {
+      pestanas.forEach((pestana, i) => {
+        const activa = i === indice;
+        pestana.setAttribute('aria-selected', String(activa));
+        pestana.tabIndex = activa ? 0 : -1;
+        capturas[i].hidden = !activa;
+      });
+    };
+
+    pestanas.forEach((pestana, indice) => {
+      pestana.addEventListener('click', () => seleccionar(indice));
+      pestana.addEventListener('keydown', (evento) => {
+        const ultimo = pestanas.length - 1;
+        let siguiente: number;
+
+        switch (evento.key) {
+          case 'ArrowLeft': siguiente = indice === 0 ? ultimo : indice - 1; break;
+          case 'ArrowRight': siguiente = indice === ultimo ? 0 : indice + 1; break;
+          case 'Home': siguiente = 0; break;
+          case 'End': siguiente = ultimo; break;
+          default: return;
+        }
+
+        evento.preventDefault();
+        seleccionar(siguiente);
+        pestanas[siguiente].focus();
+      });
+    });
+
+    lista.hidden = false;
+  });
+</script>
+
+<style>
+  .media {
+    background: var(--raised);
+    border-top: 1px solid var(--line);
+    overflow: hidden;
+  }
+
+  /* Galería de escritorio */
+  .media--desktop {
+    padding: 28px 40px;
+  }
+  .gallery {
+    max-width: 980px;
+    margin: 0 auto;
+  }
+  .tabs:not([hidden]) {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  .tabs button {
+    font: 500 13.5px var(--sans);
+    padding: 7px 14px;
+    min-height: 36px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .tabs button[aria-selected='true'] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+  .window {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: 0 12px 36px -22px rgba(0, 0, 0, 0.5);
+    background: #1d1d22;
+  }
+  .shot-link {
+    display: block;
+    cursor: zoom-in;
+    color: #f0f0f4;
+    text-decoration: none;
+  }
+  .shot-link:focus-visible {
+    outline: 2px solid #a5b7ff;
+    outline-offset: -3px;
+    border-radius: 10px;
+  }
+  .chrome {
+    min-height: 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+  }
+  .chrome-dots {
+    display: flex;
+    gap: 7px;
+  }
+  .chrome-dots i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #595961;
+  }
+  .shot-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font: 500 13px var(--sans);
+  }
+  .shot-action svg {
+    width: 14px;
+    height: 14px;
+    flex: none;
+  }
+  .shot-link:hover .shot-action {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .window img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .window p.shot-description {
+    border-top: 1px solid #383842;
+    padding: 12px 16px;
+    color: #d5d5dc;
+    font-size: 14px;
+  }
+  @media (max-width: 620px) {
+    .media--desktop { padding: 20px 16px 16px; }
+    .tabs button { min-height: 44px; }
+  }
+</style>

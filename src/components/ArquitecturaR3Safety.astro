@@ -1,0 +1,68 @@
+---
+interface Props {
+  compacto?: boolean;
+}
+const { compacto = false } = Astro.props;
+---
+
+<div class:list={['diagram', { compacto }]}>
+  <div class="arch" role="img" aria-label="La aplicación Vue llama a la API .NET, que usa una base principal, una base por empresa y MinIO para las evidencias">
+    <svg viewBox="0 0 440 220">
+      <rect class="box" x="150" y="8" width="140" height="44" rx="10"></rect>
+      <text x="220" y="28" text-anchor="middle">Vue 3</text><text class="sub" x="220" y="43" text-anchor="middle">SPA</text>
+      <path class="ln" d="M220 52v26"></path>
+      <rect class="hl" x="130" y="78" width="180" height="48" rx="10"></rect>
+      <text x="220" y="99" text-anchor="middle">API .NET 10</text><text class="sub" x="220" y="114" text-anchor="middle">JWT · MediatR · Dapper</text>
+      <path class="ln" d="M170 126 L70 160 M220 126v34 M270 126 L370 160"></path>
+      <rect class="box" x="10" y="160" width="120" height="48" rx="10"></rect>
+      <text x="70" y="181" text-anchor="middle">Base principal</text><text class="sub" x="70" y="196" text-anchor="middle">usuarios</text>
+      <rect class="box" x="160" y="160" width="120" height="48" rx="10"></rect>
+      <text x="220" y="181" text-anchor="middle">Base por empresa</text><text class="sub" x="220" y="196" text-anchor="middle">PostgreSQL</text>
+      <rect class="box" x="310" y="160" width="120" height="48" rx="10"></rect>
+      <text x="370" y="181" text-anchor="middle">Evidencias</text><text class="sub" x="370" y="196" text-anchor="middle">MinIO · S3</text>
+    </svg>
+  </div>
+</div>
+
+<style>
+  .diagram {
+    display: flex;
+    justify-content: center;
+    padding: clamp(12px, 3vw, 32px);
+  }
+  .compacto {
+    width: 100%;
+    padding: 6px 12px;
+  }
+  .arch {
+    width: 100%;
+    max-width: 520px;
+  }
+  .arch svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .arch text {
+    font: 500 12px var(--sans);
+    fill: var(--ink);
+  }
+  .arch .sub {
+    font: 400 10.5px var(--mono);
+    fill: var(--muted);
+  }
+  .arch .box {
+    fill: var(--surface);
+    stroke: var(--line);
+  }
+  .arch .hl {
+    fill: var(--surface);
+    stroke: var(--accent);
+  }
+  .arch .ln {
+    stroke: var(--muted);
+    stroke-width: 1.2;
+    fill: none;
+  }
+
+</style>

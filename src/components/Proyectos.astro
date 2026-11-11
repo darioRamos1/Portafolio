@@ -1,479 +1,201 @@
 ---
 import { Image } from 'astro:assets';
-import GaleriaFinanzas from './GaleriaFinanzas.astro';
-import consulta from '../assets/proyectos/druse-consulta.jpg';
 import constructor from '../assets/proyectos/druse-constructor.jpg';
-import relaciones from '../assets/proyectos/druse-relaciones.jpg';
-
-// Las capturas de Druse usan una base de ejemplo con datos ficticios.
-const druse = [
-  {
-    src: consulta,
-    nombre: 'Editor SQL',
-    alt: 'Editor SQL de Druse con tres tablas unidas y siete filas de ventas por ciudad',
-    detalle: 'Explora el esquema, escribe SQL y revisa el resultado de ventas por ciudad en la cuadrícula.',
-  },
-  {
-    src: constructor,
-    nombre: 'Constructor visual',
-    alt: 'Constructor de Druse con un filtro de pedidos pagados, agrupación por ciudad, SQL generado y resultados',
-    detalle: 'Combina tablas, filtros y cálculos. Druse genera el SQL y permite probarlo en el mismo panel.',
-  },
-  {
-    src: relaciones,
-    nombre: 'Diagrama de relaciones',
-    alt: 'Diagrama de la tienda de ejemplo con cinco tablas y cuatro relaciones por claves foráneas',
-    detalle: 'Sigue las claves foráneas entre clientes, pedidos, productos y las demás tablas de la tienda de ejemplo.',
-  },
-];
-
+import finanzasInicio from '../assets/proyectos/finanzas-inicio.png';
+import finanzasReportes from '../assets/proyectos/finanzas-reportes.png';
+import ArquitecturaR3Safety from './ArquitecturaR3Safety.astro';
+import { proyectos } from '../data/proyectos';
 ---
 
 <section id="trabajo" class="wrap">
-  <div class="sec-title reveal">
-    <div><span class="eyebrow">Trabajo seleccionado</span><h2>Productos que he construido</h2></div>
-    <p>Proyectos personales, desde el diseño hasta las pruebas.</p>
+  <div class="sec-title">
+    <h2>Proyectos</h2>
   </div>
 
-  <div class="work">
-    <article class="case case--featured reveal" id="druse">
-      <div class="case-body">
-        <div>
-          <span class="eyebrow case-label">Proyecto destacado</span>
-          <h3>Druse</h3>
-          <p class="kind">Cliente de bases de datos para Windows · Código abierto</p>
-          <div class="tags"><span class="tag">C# · .NET 10</span><span class="tag">Angular</span><span class="tag">Tauri</span><span class="tag">Playwright</span><span class="tag">GitHub Actions</span></div>
-          <div class="links">
-            <a class="btn primary" href="https://darioramos1.github.io/druse/">Sitio y descargas <span aria-hidden="true">↗</span></a>
-            <a class="text-link" href="https://github.com/darioRamos1/druse">Código en GitHub <span aria-hidden="true">↗</span></a>
-          </div>
+  <div class="project-grid">
+    {proyectos.map((proyecto) => (
+      <article class="project" id={proyecto.id}>
+        <div class:list={['preview', 'preview--' + proyecto.id]} aria-hidden="true">
+          {proyecto.id === 'druse' && (
+            <Image
+              src={constructor}
+              alt=""
+              widths={[360, 540, 720]}
+              sizes="(max-width: 740px) 25vw, (max-width: 1120px) 38vw, 440px"
+              loading="lazy"
+            />
+          )}
+          {proyecto.id === 'finanzas' && (
+            <div class="phones">
+              <Image src={finanzasInicio} alt="" width={210} loading="lazy" />
+              <Image src={finanzasReportes} alt="" width={210} loading="lazy" />
+            </div>
+          )}
+          {proyecto.id === 'r3safety' && <ArquitecturaR3Safety compacto />}
         </div>
-        <div>
-          <p>Construí un cliente para explorar esquemas, visualizar relaciones y consultar datos con un editor SQL con autocompletado o con un constructor visual que genera y prueba las consultas.</p>
-          <p>Automaticé la compilación, las pruebas y la publicación de cada versión, con actualizaciones firmadas. La app se instala sin .NET ni Node.js.</p>
-          <div class="stats stats--featured">
-            <div><b>6</b><span>motores de bases de datos</span></div>
-            <div><b>3</b><span>ediciones para Windows</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="media media--desktop">
-        <div class="gallery" data-gallery>
-          <div class="tabs" role="tablist" aria-label="Capturas de Druse" hidden>
-            {druse.map((c, i) => (
-              <button
-                type="button"
-                role="tab"
-                id={`druse-tab-${i}`}
-                aria-controls={`druse-captura-${i}`}
-                aria-selected={i === 0 ? 'true' : 'false'}
-                tabindex={i === 0 ? 0 : -1}
-              >{c.nombre}</button>
-            ))}
-          </div>
-          <div class="window">
-            {druse.map((c, i) => (
-              <div role="tabpanel" id={`druse-captura-${i}`} aria-labelledby={`druse-tab-${i}`} hidden={i !== 0}>
-                <a class="shot-link" href={c.src.src} target="_blank" rel="noopener" aria-describedby="druse-captura-aviso">
-                  <span class="chrome">
-                    <span class="chrome-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-                    <span class="shot-action">
-                      Ampliar captura
-                      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M10 2h4v4m0-4-4 4M6 14H2v-4m0 4 4-4" /></svg>
-                    </span>
-                  </span>
-                  <Image
-                    src={c.src}
-                    alt={c.alt}
-                    widths={[360, 720, 1080, 1280]}
-                    sizes="(max-width: 620px) calc(100vw - 76px), (max-width: 1100px) calc(100vw - 124px), 980px"
-                    loading="lazy"
-                  />
-                </a>
-                <p class="shot-description">{c.detalle}</p>
-              </div>
-            ))}
-            <span class="sr-only" id="druse-captura-aviso">Se abre en una pestaña nueva.</span>
-          </div>
-        </div>
-      </div>
-    </article>
 
-    <article class="case reveal" id="finanzas">
-      <div class="case-body">
-        <div>
-          <h3>Druse Finanzas</h3>
-          <p class="kind">App Android de finanzas personales · Sin conexión</p>
-          <div class="tags"><span class="tag">Angular</span><span class="tag">Ionic</span><span class="tag">Capacitor</span><span class="tag">SQLite</span><span class="tag">Playwright</span></div>
-          <div class="links">
-            <a class="btn" href="https://darioramos1.github.io/druse-finanzas-legal/index.html">Conocer la app <span aria-hidden="true">↗</span></a>
-            <a class="text-link" href="https://darioramos1.github.io/druse-finanzas-legal/privacidad.html">Política de privacidad <span aria-hidden="true">↗</span></a>
-          </div>
+        <div class="project-body">
+          <p class="category">{proyecto.categoria}</p>
+          <h3>
+            <a href={import.meta.env.BASE_URL + 'proyectos/' + proyecto.id + '/'}>
+              {proyecto.nombre}
+              <span class="project-arrow" aria-hidden="true">↗</span>
+            </a>
+          </h3>
+          <p class="summary">{proyecto.resumen}</p>
+          <ul class="tags" aria-label="Tecnologías principales">
+            {proyecto.tecnologias.slice(0, 3).map((tecnologia) => <li class="tag">{tecnologia}</li>)}
+          </ul>
         </div>
-        <div>
-          <p>Cuentas, gastos, pagos próximos, suscripciones y reportes, guardados en el teléfono y sin depender de internet. Pensada para el español de Colombia y los pesos colombianos.</p>
-          <div class="stats">
-            <div><b data-count="806">806</b><span>pruebas unitarias</span></div>
-            <div><b data-count="83">83</b><span>pruebas de punta a punta</span></div>
-            <div><b>v1.0</b><span>Android 7 o superior</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="media">
-        <GaleriaFinanzas />
-      </div>
-    </article>
-
-    <article class="case case--split reveal" id="r3safety">
-      <div class="case-body">
-        <div>
-          <h3>R3Safety</h3>
-          <p class="kind">SaaS para seguridad y salud en el trabajo</p>
-          <div class="tags"><span class="tag">.NET 10 · CQRS</span><span class="tag">Dapper</span><span class="tag">Vue 3</span><span class="tag">PostgreSQL</span><span class="tag">MinIO</span><span class="tag">Docker</span></div>
-          <div class="project-status">
-            <span class="tag">En desarrollo · repositorio privado</span>
-            <p>Puedo mostrarlo en una entrevista.</p>
-          </div>
-        </div>
-        <div>
-          <p>Ayuda a las empresas colombianas a cumplir el Decreto 1072 y la Resolución 0312: autoevaluación anual, checklist, evidencias, plan de mejora y auditoría.</p>
-          <p>Cada empresa tiene su propia base de datos. La sesión usa un token corto en memoria y un refresh token que rota y detecta reutilización.</p>
-        </div>
-      </div>
-      <div class="media media--diagram">
-        <div class="arch" role="img" aria-label="La aplicación Vue llama a la API .NET, que usa una base principal, una base por empresa y MinIO para las evidencias">
-          <svg viewBox="0 0 440 220">
-            <rect class="box" x="150" y="8" width="140" height="44" rx="10"></rect>
-            <text x="220" y="28" text-anchor="middle">Vue 3</text><text class="sub" x="220" y="43" text-anchor="middle">SPA</text>
-            <path class="ln" d="M220 52v26"></path>
-            <rect class="hl" x="130" y="78" width="180" height="48" rx="10"></rect>
-            <text x="220" y="99" text-anchor="middle">API .NET 10</text><text class="sub" x="220" y="114" text-anchor="middle">JWT · MediatR · Dapper</text>
-            <path class="ln" d="M170 126 L70 160 M220 126v34 M270 126 L370 160"></path>
-            <rect class="box" x="10" y="160" width="120" height="48" rx="10"></rect>
-            <text x="70" y="181" text-anchor="middle">Base principal</text><text class="sub" x="70" y="196" text-anchor="middle">usuarios</text>
-            <rect class="box" x="160" y="160" width="120" height="48" rx="10"></rect>
-            <text x="220" y="181" text-anchor="middle">Base por empresa</text><text class="sub" x="220" y="196" text-anchor="middle">PostgreSQL</text>
-            <rect class="box" x="310" y="160" width="120" height="48" rx="10"></rect>
-            <text x="370" y="181" text-anchor="middle">Evidencias</text><text class="sub" x="370" y="196" text-anchor="middle">MinIO · S3</text>
-          </svg>
-        </div>
-      </div>
-    </article>
+      </article>
+    ))}
   </div>
 </section>
 
-<script>
-  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((galeria) => {
-    const lista = galeria.querySelector<HTMLElement>('[role="tablist"]');
-    if (!lista) return;
-
-    const pestanas = galeria.querySelectorAll<HTMLButtonElement>('[role="tab"]');
-    const capturas = galeria.querySelectorAll<HTMLElement>('[role="tabpanel"]');
-
-    const seleccionar = (indice: number) => {
-      pestanas.forEach((pestana, i) => {
-        const activa = i === indice;
-        pestana.setAttribute('aria-selected', String(activa));
-        pestana.tabIndex = activa ? 0 : -1;
-        capturas[i].hidden = !activa;
-      });
-    };
-
-    pestanas.forEach((pestana, indice) => {
-      pestana.addEventListener('click', () => seleccionar(indice));
-      pestana.addEventListener('keydown', (evento) => {
-        const ultimo = pestanas.length - 1;
-        let siguiente: number;
-
-        switch (evento.key) {
-          case 'ArrowLeft': siguiente = indice === 0 ? ultimo : indice - 1; break;
-          case 'ArrowRight': siguiente = indice === ultimo ? 0 : indice + 1; break;
-          case 'Home': siguiente = 0; break;
-          case 'End': siguiente = ultimo; break;
-          default: return;
-        }
-
-        evento.preventDefault();
-        seleccionar(siguiente);
-        pestanas[siguiente].focus();
-      });
-    });
-
-    lista.hidden = false;
-  });
-</script>
-
 <style>
   #trabajo {
-    padding-top: 40px;
+    padding-block: clamp(24px, 4vw, 48px);
   }
-  .work {
+  .project-grid {
     display: grid;
-    gap: 24px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
   }
-  .case {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 20px;
+  .project {
+    position: relative;
     overflow: hidden;
-    box-shadow: var(--shadow);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--surface);
   }
-  .case--featured {
-    border-color: color-mix(in srgb, var(--accent) 32%, var(--line));
+  .project:hover {
+    border-color: var(--accent);
   }
-  .case-label {
-    display: block;
-    margin-bottom: 7px;
+  .project:has(a:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
   }
-  .case-body {
-    padding: 36px 40px;
+  .preview {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px 48px;
-    align-items: start;
+    place-items: center;
+    position: relative;
+    aspect-ratio: 2.05;
+    overflow: hidden;
+    background: var(--raised);
+    border-bottom: 1px solid var(--line);
   }
-  .case-body > * {
-    min-width: 0;
+  .preview--druse > img {
+    position: absolute;
+    inset: 0 0 0 -13%;
+    width: 126%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: center 47%;
+  }
+  .preview--finanzas {
+    background: radial-gradient(ellipse at 50% 80%, color-mix(in srgb, #2a9270 25%, var(--raised)), var(--raised) 80%);
+  }
+  .phones {
+    position: absolute;
+    inset: 15px 0 0;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    gap: 10px;
+  }
+  .phones img {
+    width: clamp(76px, 9vw, 110px);
+    height: auto;
+    border: 3px solid #263a32;
+    border-radius: 13px;
+    background: #263a32;
+  }
+  .phones img + img {
+    margin-top: 14px;
+  }
+  .preview--r3safety {
+    background: radial-gradient(ellipse at 50% 30%, color-mix(in srgb, var(--accent) 15%, var(--raised)), var(--raised) 80%);
+  }
+  .project-body {
+    padding: 16px 18px 20px;
+  }
+  .category {
+    color: var(--accent);
+    font: 500 11.5px/1.4 var(--mono);
   }
   h3 {
-    font-size: 28px;
-    letter-spacing: -0.03em;
+    margin-top: 3px;
+    font-size: 23px;
+    letter-spacing: -0.035em;
   }
-  .kind {
-    font-size: 14px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-  .case p:not(.kind) {
-    color: var(--muted);
-  }
-  .case-body > div > p + p {
-    margin-top: 12px;
-  }
-  .links {
+  h3 a {
     display: flex;
     align-items: center;
-    gap: 8px 16px;
-    flex-wrap: wrap;
-    margin-top: 22px;
-    font-size: 14.5px;
-    font-weight: 500;
-  }
-  .text-link {
-    padding-block: 8px;
-    text-underline-offset: 3px;
-    text-decoration-color: var(--line);
-  }
-  .text-link:hover {
-    color: var(--accent);
-    text-decoration-color: currentColor;
-  }
-  .project-status {
-    margin-top: 22px;
-    font-size: 14px;
-  }
-  .project-status p {
-    margin-top: 8px;
-  }
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    margin-top: 24px;
-    border-top: 1px solid var(--line);
-  }
-  .stats--featured {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-  .stats--featured b {
-    color: var(--accent);
-  }
-  .stats div {
-    padding-top: 16px;
-  }
-  .stats b {
-    display: block;
-    font-size: 26px;
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    font-variant-numeric: tabular-nums;
-  }
-  .stats span {
-    font-size: 13px;
-    color: var(--muted);
-  }
-
-  .media {
-    background: var(--raised);
-    border-top: 1px solid var(--line);
-    overflow: hidden;
-  }
-
-  /* Galería de escritorio */
-  .media--desktop {
-    padding: 28px 40px;
-  }
-  .gallery {
-    max-width: 980px;
-    margin: 0 auto;
-  }
-  .tabs:not([hidden]) {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 24px;
-  }
-  .tabs button {
-    font: 500 13.5px var(--sans);
-    padding: 7px 14px;
-    min-height: 36px;
-    border-radius: 999px;
-    border: 1px solid var(--line);
-    background: var(--surface);
-    color: var(--muted);
-    cursor: pointer;
-  }
-  .tabs button[aria-selected='true'] {
-    background: var(--ink);
-    border-color: var(--ink);
-    color: var(--bg);
-  }
-  .window {
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    box-shadow: 0 12px 36px -22px rgba(0, 0, 0, 0.5);
-    background: #1d1d22;
-  }
-  .shot-link {
-    display: block;
-    cursor: zoom-in;
-    color: #f0f0f4;
+    justify-content: space-between;
+    gap: 8px;
     text-decoration: none;
   }
-  .shot-link:focus-visible {
-    outline: 2px solid #a5b7ff;
-    outline-offset: -3px;
-    border-radius: 10px;
+  h3 a::after {
+    position: absolute;
+    inset: 0;
+    content: '';
   }
-  .chrome {
-    min-height: 44px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 14px;
+  h3 a:focus-visible {
+    outline: none;
   }
-  .chrome-dots {
-    display: flex;
-    gap: 7px;
+  .project-arrow {
+    color: var(--accent);
+    font-size: 18px;
   }
-  .chrome-dots i {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #595961;
-  }
-  .shot-action {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font: 500 13px var(--sans);
-  }
-  .shot-action svg {
-    width: 14px;
-    height: 14px;
-    flex: none;
-  }
-  .shot-link:hover .shot-action {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-  .window img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-  .window p.shot-description {
-    border-top: 1px solid #383842;
-    padding: 12px 16px;
-    color: #d5d5dc;
+  .summary {
+    margin-top: 4px;
+    color: var(--muted);
     font-size: 14px;
+    line-height: 1.5;
   }
-  @media (prefers-reduced-motion: no-preference) {
-    .tabs button {
-      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-    }
-    .case {
-      transition:
-        transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
-        box-shadow 0.35s ease,
-        opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
-    }
-    :global(.js) .reveal .arch .ln {
-      stroke-dasharray: 160;
-      stroke-dashoffset: 160;
-      transition: stroke-dashoffset 1.1s ease 0.4s;
-    }
-    :global(.js) .reveal.is-in .arch .ln {
-      stroke-dashoffset: 0;
-    }
-  }
-  /* Diagrama */
-  .media--diagram {
-    display: flex;
-    justify-content: center;
-    padding: 36px 40px;
-  }
-  .arch {
-    width: 100%;
-    max-width: 520px;
-  }
-  .arch svg {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  .arch text {
-    font: 500 12px var(--sans);
-    fill: var(--ink);
-  }
-  .arch .sub {
-    font: 400 10.5px var(--mono);
-    fill: var(--muted);
-  }
-  .arch .box {
-    fill: var(--surface);
-    stroke: var(--line);
-  }
-  .arch .hl {
-    fill: var(--surface);
-    stroke: var(--accent);
-  }
-  .arch .ln {
-    stroke: var(--muted);
-    stroke-width: 1.2;
-    fill: none;
+  .tags {
+    list-style: none;
+    padding: 0;
+    margin-block: 14px 0;
   }
 
-  @media (max-width: 900px) {
-    .case-body {
+  @media (max-width: 740px) {
+    .project-grid {
       grid-template-columns: 1fr;
+      gap: 10px;
     }
-  }
-  @media (max-width: 620px) {
-    .case-body {
-      padding: 24px;
+    .project {
+      display: grid;
+      grid-template-columns: clamp(85px, 25vw, 150px) minmax(0, 1fr);
     }
-    .media--desktop {
-      padding: 20px 16px 16px;
+    .preview {
+      aspect-ratio: auto;
+      border-bottom: 0;
+      border-right: 1px solid var(--line);
     }
-    .media--diagram {
-      padding: 24px 16px;
+    .preview--druse > img {
+      inset-inline-start: 0;
+      width: 100%;
+      object-position: 58% center;
     }
-    .stats b {
-      font-size: 21px;
+    .phones {
+      inset-block-start: 15px;
+    }
+    .phones img {
+      width: min(70%, 76px);
+    }
+    .phones img + img {
+      display: none;
+    }
+    .project-body {
+      padding: 12px 13px 14px;
+    }
+    h3 {
+      font-size: 20px;
+    }
+    .tags {
+      display: none;
     }
   }
 </style>

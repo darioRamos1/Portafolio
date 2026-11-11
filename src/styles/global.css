@@ -7,6 +7,8 @@
   --muted: #68686f;
   --line: #e6e6e8;
   --accent: #2f5bea;
+  --action: #254ed3;
+  --action-ink: #ffffff;
   --ok: #16a34a;
   --sans: 'Geist Variable', 'Segoe UI', system-ui, -apple-system, sans-serif;
   --mono: 'Geist Mono Variable', ui-monospace, 'Cascadia Code', Consolas, monospace;
@@ -22,6 +24,8 @@
   --muted: #9a9aa3;
   --line: #26262b;
   --accent: #7c9bff;
+  --action: #a8bbff;
+  --action-ink: #121936;
   --ok: #4ade80;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px -16px rgba(0, 0, 0, 0.6);
   color-scheme: dark;
@@ -78,7 +82,7 @@ p {
 .wrap {
   max-width: 1120px;
   margin: 0 auto;
-  padding-inline: max(20px, env(safe-area-inset-left, 0px));
+  padding-inline: max(20px, env(safe-area-inset-left, 0px)) max(20px, env(safe-area-inset-right, 0px));
 }
 
 .sr-only {
@@ -90,12 +94,25 @@ p {
   white-space: nowrap;
 }
 
+.skip-link {
+  position: fixed;
+  z-index: 10;
+  inset: 8px auto auto 12px;
+  padding: 10px 16px;
+  background: var(--surface);
+  transform: translateY(-150%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
 /* Botones */
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 42px;
+  min-height: 44px;
   padding: 0 18px;
   border-radius: 10px;
   font: 500 15px var(--sans);
@@ -106,12 +123,12 @@ p {
   cursor: pointer;
 }
 .btn.primary {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--bg);
+  background: var(--action);
+  border-color: var(--action);
+  color: var(--action-ink);
 }
 .btn.small {
-  height: 34px;
+  min-height: 36px;
   font-size: 14px;
   padding: 0 14px;
 }
@@ -124,25 +141,11 @@ p {
 section {
   padding-block: 72px;
 }
-.eyebrow {
-  font: 500 13px var(--mono);
-  color: var(--accent);
-}
 .sec-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 24px;
-  flex-wrap: wrap;
-  margin-bottom: 40px;
+  margin-bottom: clamp(18px, 3vw, 30px);
 }
 .sec-title h2 {
   font-size: clamp(28px, 3.6vw, 40px);
-  margin-top: 8px;
-}
-.sec-title p {
-  color: var(--muted);
-  max-width: 44ch;
 }
 
 .tags {
@@ -189,18 +192,4 @@ section {
     transform: none;
   }
 
-  @keyframes entrar {
-    from {
-      opacity: 0;
-      transform: translateY(18px);
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-  .enter {
-    animation: entrar 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-    animation-delay: var(--delay, 0s);
-  }
 }

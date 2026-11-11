@@ -4,12 +4,27 @@ import { experiencia, formacion, habilidades } from '../data/perfil';
 
 <section id="experiencia" class="wrap">
   <div class="sec-title reveal">
-    <div><span class="eyebrow">Experiencia</span><h2>Dónde he trabajado</h2></div>
+    <h2>Experiencia profesional</h2>
   </div>
   <div class="jobs">
     {experiencia.map((e, i) => (
       <div class="job reveal" style={`--delay:${i * 0.06}s`}>
-        <div class="co">{e.empresa}{e.detalle && <small>{e.detalle}</small>}</div>
+        <div class="co">
+          {e.logo && (
+            <img
+              class="company-logo"
+              src={e.logo.url}
+              style={`background-color: ${e.logo.fondo}`}
+              alt=""
+              width="72"
+              height="40"
+              loading="lazy"
+              decoding="async"
+              referrerpolicy="no-referrer"
+            />
+          )}
+          <div>{e.empresa}{e.detalle && <small>{e.detalle}</small>}</div>
+        </div>
         <div>
           <h3>{e.cargo}</h3>
           <p>{e.resumen}</p>
@@ -22,7 +37,7 @@ import { experiencia, formacion, habilidades } from '../data/perfil';
 
 <section id="habilidades" class="wrap">
   <div class="sec-title reveal">
-    <div><span class="eyebrow">Habilidades</span><h2>Con qué trabajo</h2></div>
+    <h2>Habilidades y formación</h2>
   </div>
   <div class="skills reveal">
     {habilidades.map((h) => (
@@ -40,6 +55,9 @@ import { experiencia, formacion, habilidades } from '../data/perfil';
 </section>
 
 <style>
+  #experiencia {
+    padding-top: clamp(28px, 4vw, 48px);
+  }
   .jobs {
     border-top: 1px solid var(--line);
   }
@@ -53,8 +71,24 @@ import { experiencia, formacion, habilidades } from '../data/perfil';
   .job > * {
     min-width: 0;
   }
+  .job:first-child {
+    border-inline-start: 3px solid var(--accent);
+    padding-inline-start: 16px;
+    background: color-mix(in srgb, var(--accent) 5%, transparent);
+  }
   .co {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
     font-weight: 600;
+  }
+  .company-logo {
+    flex: none;
+    width: 72px;
+    height: 40px;
+    padding: 4px;
+    border-radius: 6px;
+    object-fit: contain;
   }
   .co small {
     display: block;

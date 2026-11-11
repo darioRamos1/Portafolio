@@ -1,150 +1,161 @@
 ---
 import { Image } from 'astro:assets';
 import foto from '../assets/foto.png';
-import druse from '../assets/proyectos/druse-consulta.jpg';
+import relaciones from '../assets/proyectos/druse-relaciones.jpg';
 import { perfil } from '../data/perfil';
 ---
 
 <div class="hero wrap" id="inicio">
   <div class="hero-copy">
-    <div class="identity enter">
-      <Image class="avatar" src={foto} alt="" width={128} loading="eager" />
+    <div class="identity">
+      <Image class="avatar" src={foto} alt="" width={112} loading="eager" />
       <div>
         <p class="name">{perfil.nombre}</p>
-        {perfil.disponible && <span class="status"><i aria-hidden="true"></i>Disponible para nuevos proyectos</span>}
+        {perfil.disponible && <p class="status"><span aria-hidden="true"></span>Disponible para nuevos roles</p>}
       </div>
     </div>
-    <h1 class="enter" style="--delay:.12s">{perfil.rol}<em>{perfil.stack}</em></h1>
-    <p class="lead enter" style="--delay:.22s">{perfil.presentacion}</p>
-    <div class="actions enter" style="--delay:.32s">
-      <a class="btn primary" href="#trabajo">Ver mi trabajo</a>
+
+    <h1>{perfil.rol}</h1>
+    <p class="stack">{perfil.stack}</p>
+    <p class="lead">{perfil.presentacion}</p>
+
+    <div class="actions">
+      <a class="btn primary" href="#trabajo">Ver proyectos <span aria-hidden="true">↓</span></a>
       <a class="btn" href={perfil.cv} download>
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 2v8m0 0 3-3m-3 3L5 7M3 13h10"></path></svg>
         Descargar CV
       </a>
     </div>
-    <div class="meta enter" style="--delay:.42s">
-      {perfil.cifras.map((c) => <span>{c.valor && <b>{c.valor}</b>} {c.texto}</span>)}
-    </div>
+
+    <a class="experience-note" href="#experiencia">
+      <span>
+        <strong>DataTools</strong>
+        <span>Migré proyectos de SAEPS a .NET 9 y trabajé en transporte público y notificaciones para Fénix.</span>
+      </span>
+      <span class="arrow" aria-hidden="true">↘</span>
+    </a>
   </div>
 
-  <a class="featured enter" style="--delay:.22s" href="#druse">
+  <a class="featured" href={import.meta.env.BASE_URL + 'proyectos/druse/'}>
     <div class="featured-art">
-      <span class="featured-label">Proyecto destacado</span>
-      <Image
-        src={druse}
-        alt=""
-        widths={[360, 540, 720, 900]}
-        sizes="(max-width: 540px) calc(100vw - 72px), (max-width: 860px) 480px, 425px"
-        loading="eager"
-      />
+      <div class="featured-window">
+        <Image
+          src={relaciones}
+          alt=""
+          widths={[480, 720, 960, 1280]}
+          sizes="(max-width: 620px) 100vw, (max-width: 820px) 620px, 560px"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
     </div>
     <div class="featured-caption">
       <div>
         <p class="featured-title">Druse</p>
-        <p class="featured-description">Cliente SQL de código abierto para Windows</p>
+        <p class="featured-description">Diagramas de relaciones en un cliente SQL de código abierto</p>
       </div>
-      <svg class="featured-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-        <path d="M4 10h11m-4-4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"></path>
-      </svg>
+      <span class="featured-arrow" aria-hidden="true">↗</span>
     </div>
   </a>
 </div>
 
 <style>
   .hero {
-    padding-block: 76px 56px;
+    padding-block: clamp(36px, 6.6vw, 86px) clamp(28px, 5vw, 60px);
     display: grid;
-    grid-template-columns: minmax(0, 1.22fr) minmax(0, 1fr);
-    gap: 36px;
+    grid-template-columns: minmax(0, 1.06fr) minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 56px);
     align-items: center;
   }
   .identity {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
   }
   .avatar {
-    width: 60px;
-    height: 60px;
+    width: 52px;
+    height: 52px;
     flex: none;
-    border-radius: 16px;
+    border-radius: 14px;
     object-fit: cover;
     object-position: 50% 25%;
     border: 1px solid var(--line);
     background: #fff;
   }
+  .name {
+    font-weight: 650;
+    line-height: 1.4;
+  }
   .status {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 8px;
     font-size: 13px;
     color: var(--muted);
   }
-  .name {
-    font-size: 16px;
-    font-weight: 600;
-  }
-  .status i {
+  .status span {
     width: 7px;
     height: 7px;
     flex: none;
     border-radius: 50%;
     background: var(--ok);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 20%, transparent);
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .status i {
-      animation: pulso 2.4s ease-out infinite;
-    }
-    @keyframes pulso {
-      0% {
-        box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 45%, transparent);
-      }
-      70%,
-      100% {
-        box-shadow: 0 0 0 8px transparent;
-      }
-    }
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 17%, transparent);
   }
   h1 {
-    font-size: clamp(34px, 4.4vw, 54px);
-    line-height: 1.07;
-    margin-top: 24px;
-    letter-spacing: -0.04em;
+    font-size: clamp(38px, 4.9vw, 65px);
+    line-height: 1.03;
+    margin-top: 22px;
+    letter-spacing: -0.055em;
+    max-width: 16ch;
   }
-  h1 em {
-    display: block;
-    font-style: normal;
-    color: var(--muted);
-    margin-top: 4px;
+  .stack {
+    color: var(--accent);
+    font-size: clamp(19px, 2.2vw, 25px);
+    font-weight: 570;
+    letter-spacing: -0.025em;
+    margin-top: 8px;
   }
   .lead {
     font-size: clamp(16px, 1.6vw, 18px);
     color: var(--muted);
-    max-width: 56ch;
-    margin-top: 18px;
+    max-width: 47ch;
+    margin-top: 12px;
     line-height: 1.55;
   }
   .actions {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
-    margin-top: 24px;
-  }
-  .meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 18px;
     margin-top: 22px;
-    font-size: 13px;
+  }
+  .experience-note {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 12px 14px;
+    margin-top: 22px;
+    max-width: 46ch;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
     color: var(--muted);
+    font-size: 14px;
+    line-height: 1.48;
+    text-decoration: none;
   }
-  .meta b {
+  .experience-note:hover {
+    border-color: var(--accent);
+  }
+  .experience-note strong {
+    display: block;
     color: var(--ink);
-    font-weight: 500;
+    margin-bottom: 2px;
   }
-
+  .arrow {
+    color: var(--accent);
+    flex: none;
+  }
   .featured {
     display: block;
     overflow: hidden;
@@ -154,78 +165,69 @@ import { perfil } from '../data/perfil';
     box-shadow: var(--shadow);
     text-decoration: none;
   }
-  .featured:hover,
-  .featured:focus-visible {
+  .featured:hover {
     border-color: var(--accent);
   }
   .featured-art {
-    padding: 18px clamp(14px, 2vw, 24px) 0;
-    background:
-      radial-gradient(ellipse at 90% 100%, color-mix(in srgb, var(--accent) 21%, transparent), transparent 73%),
-      color-mix(in srgb, var(--accent) 7%, var(--raised));
+    padding: clamp(14px, 2.5vw, 28px);
+    background: radial-gradient(ellipse at 65% 0%, color-mix(in srgb, var(--accent) 26%, var(--raised)), var(--raised) 80%);
   }
-  .featured-label {
-    display: block;
-    margin-bottom: 14px;
-    font: 500 12px var(--mono);
-    color: var(--accent);
+  .featured-window {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid #393f51;
+    aspect-ratio: 1.65;
+    background: #15171f;
   }
-  .featured-art img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border: 1px solid color-mix(in srgb, var(--ink) 19%, transparent);
-    border-bottom: 0;
-    border-radius: 8px 8px 0 0;
-    background: #1d1d22;
+  .featured-window img {
+    position: absolute;
+    inset: 0 0 0 -14%;
+    width: 128%;
+    max-width: none;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 58%;
   }
   .featured-caption {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding: 14px clamp(14px, 2vw, 24px);
+    padding: 16px clamp(14px, 2.5vw, 28px);
     border-top: 1px solid var(--line);
   }
   .featured-title {
     font-size: 19px;
-    font-weight: 600;
+    font-weight: 650;
   }
   .featured-description {
-    font-size: 13.5px;
+    font-size: 14px;
+    line-height: 1.45;
     color: var(--muted);
   }
   .featured-arrow {
-    width: 32px;
-    height: 32px;
-    padding: 6px;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
     flex: none;
     border: 1px solid var(--line);
     border-radius: 50%;
     color: var(--accent);
   }
 
-  @media (max-width: 860px) {
+  @media (max-width: 820px) {
     .hero {
       grid-template-columns: 1fr;
-      padding-block: 48px 36px;
     }
     .featured {
-      width: min(100%, 528px);
+      width: min(100%, 560px);
     }
   }
-  @media (max-width: 620px) {
-    .hero {
-      gap: 24px;
-      padding-block: 32px 24px;
-    }
-    .avatar {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-    }
-    .meta {
-      margin-top: 18px;
+  @media (max-width: 380px) {
+    .actions .btn {
+      padding-inline: 12px;
     }
   }
 </style>

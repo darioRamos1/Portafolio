@@ -1,4 +1,4 @@
-# Portafolio de Dario Ramos Cañas
+# Portafolio de Darío Ramos Cañas
 
 Sitio personal hecho con [Astro](https://astro.build) y publicado en GitHub Pages.
 
@@ -8,7 +8,7 @@ Necesitas Node.js 22.23 o superior.
 
 ```powershell
 npm install
-npm run dev       # http://localhost:4321
+npm run dev       # http://localhost:4321/Portafolio/
 npm run build     # genera el sitio en dist/
 npm run preview   # sirve dist/ para revisarlo
 ```
@@ -18,7 +18,8 @@ npm run preview   # sirve dist/ para revisarlo
 | Qué | Archivo |
 | --- | --- |
 | Textos, experiencia, habilidades, enlaces | `src/data/perfil.ts` |
-| Proyectos y capturas | `src/components/Proyectos.astro` y `src/assets/proyectos/` |
+| Textos y enlaces de proyectos | `src/data/proyectos.ts` |
+| Vistas previas y capturas | `src/components/Proyectos.astro` y `src/assets/proyectos/` |
 | Colores y tipografía | `src/styles/global.css` |
 | Foto | `src/assets/foto.png` |
 | CV descargable | `public/CV-Dario-Ramos-Canas.pdf` |
