@@ -8,11 +8,12 @@ export const perfil = {
   ciudad: 'Valledupar, Colombia',
   disponible: true,
   presentacion:
-    'Más de cuatro años desarrollando APIs con .NET, interfaces con Angular y procesos en Azure para plataformas de transporte, salud y finanzas.',
+    'Más de cuatro años en desarrollo full stack con C#/.NET y Angular: diseño y evolución de plataformas empresariales con APIs REST, servicios en Azure y procesamiento asíncrono.',
   email: 'dandresramosdev@gmail.com',
   github: 'https://github.com/darioRamos1',
   linkedin: 'https://www.linkedin.com/in/dario-andres-ramos-ca%C3%B1as-060935223',
-  cv: `${import.meta.env.BASE_URL}CV-Dario-Ramos-Canas.pdf`,
+  // El parámetro cambia con cada versión del CV para que nadie descargue una copia vieja de la caché.
+  cv: `${import.meta.env.BASE_URL}CV-Dario-Ramos-Canas.pdf?v=2026-11-16`,
 };
 
 export const experiencia = [
@@ -23,7 +24,7 @@ export const experiencia = [
     cargo: 'Desarrollador de software',
     periodo: '2024 — 2026',
     resumen:
-      'Módulos de transporte público y notificaciones en Fénix con .NET, Angular, Azure Functions y Service Bus. Migré proyectos de SAEPS de .NET Framework a .NET 9 con apoyo de IA.',
+      'Módulos de transporte público y notificaciones en Fénix con .NET, Angular, Azure Functions y Service Bus. En SAEPS, nuevas funciones de cuentas médicas y migración de .NET Framework a .NET 9 con apoyo de IA.',
   },
   {
     empresa: 'Artemisa Tech',
